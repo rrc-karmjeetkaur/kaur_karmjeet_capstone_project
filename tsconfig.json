@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    // Project structure
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // Target environment
+    "module": "commonjs",           // Node.js standard module system
+    "target": "ES2020",             // Modern JS features supported in Node 18+
+    "lib": ["ES2020"],              // Standard JS library features
+
+    // Type checking
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Module resolution
+    "esModuleInterop": true,        // Allows `import x from 'y'` syntax
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+
+    // Output files
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Skip type checking for all libraries (faster)
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
