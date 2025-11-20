@@ -1,0 +1,12 @@
+.env 
+# Node modules
+node_modules/
+
+# Coverage
+coverage/
+
+# Environment variables
+.env
+
+# Firebase service account
+firebase-service-account.json
