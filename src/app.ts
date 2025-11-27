@@ -10,7 +10,7 @@ import categoryRoutes from './routes/categoryRoutes';
 
 import { setupSwagger } from './config/swagger';
 import { errorMiddleware } from './middlewares/errorMiddleware';
-
+import { apiRateLimiter } from './config/rateLimit';
 dotenv.config();
 
 const app = express();
@@ -19,6 +19,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
+
+app.use('/api', apiRateLimiter);
 
 // Routes
 app.use('/api', indexRouter);
