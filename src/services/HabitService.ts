@@ -39,8 +39,48 @@ export class HabitService {
     });
   }
 
-  async getUserHabits(userId: string): Promise<Habit[]> {
-    return this.habitRepo.getHabitsByUser(userId);
+  
+  async getUserHabits(
+    userId: string,
+    options?: {
+      categoryId?: string;
+      sort?: 'createdAt' | 'name';
+      order?: 'asc' | 'desc';
+    }
+  ): Promise<Habit[]> {
+    const habits = await this.habitRepo.getHabitsByUser(userId);
+
+    let filtered = habits;
+
+    // Filter by category if provided
+    if (options?.categoryId) {
+      filtered = filtered.filter((h) => h.categoryId === options.categoryId);
+    }
+
+    // Sort if requested
+    if (options?.sort) {
+      filtered = filtered.slice().sort((a, b) => {
+        let aVal = '';
+        let bVal = '';
+
+        if (options.sort === 'createdAt') {
+          aVal = a.createdAt || '';
+          bVal = b.createdAt || '';
+        } else if (options.sort === 'name') {
+          aVal = a.name || '';
+          bVal = b.name || '';
+        }
+
+        // Default order: ascending
+        if (options.order === 'desc') {
+          return bVal.localeCompare(aVal);
+        }
+
+        return aVal.localeCompare(bVal);
+      });
+    }
+
+    return filtered;
   }
 
   async getHabitById(id: string, userId: string): Promise<Habit | null> {

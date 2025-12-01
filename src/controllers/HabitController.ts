@@ -35,7 +35,32 @@ export const getHabits = async (
     }
 
     const userId = req.user.uid;
-    const habits = await habitService.getUserHabits(userId);
+
+    // 🔹 Advanced feature: filtering + sorting from query params
+    const { categoryId, sort, order } = req.query;
+
+    const options: {
+      categoryId?: string;
+      sort?: 'name' | 'createdAt';
+      order?: 'asc' | 'desc';
+    } = {};
+
+    if (typeof categoryId === 'string') {
+      options.categoryId = categoryId;
+    }
+
+    if (sort === 'name' || sort === 'createdAt') {
+      options.sort = sort;
+    }
+
+    if (order === 'desc' || order === 'asc') {
+      options.order = order;
+    } else {
+      options.order = 'asc'; // default
+    }
+
+    const habits = await habitService.getUserHabits(userId, options);
+
     res.json(habits);
   } catch (err) {
     next(err);
