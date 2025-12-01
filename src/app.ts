@@ -11,6 +11,8 @@ import categoryRoutes from './routes/categoryRoutes';
 import { setupSwagger } from './config/swagger';
 import { errorMiddleware } from './middlewares/errorMiddleware';
 import { apiRateLimiter } from './config/rateLimit';
+import adminRoutes from './routes/adminRoutes';
+
 dotenv.config();
 
 const app = express();
@@ -27,6 +29,7 @@ app.use('/api', indexRouter);
 app.use('/api/habits', habitRoutes);
 app.use('/api/check-ins', checkInRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Root health check
 app.get('/', (_req, res) => {
